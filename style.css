@@ -1,43 +1,42 @@
 
 body {
-    margin: 0;
-    padding: 0;
-  }
-  
-  .calle {
-    /* height: 100%;  */
-    background-color: grey;
-    width: 100%;
-    height: 1000px;
-    /* position: relative; */
-    /* margin: 0; */
-  }
-  
-  .acera {
-    height: 240px;
-    width: 100%;
-    background-color: #e6ae38;
-    position: absolute;
-  }
-  
-  .acera.arriba {
-    top: 0;
-  }
-  
-  .acera.abajo {
-    bottom: 0;
-  }
+  margin: 0;
+  background-color: rgb(80, 183, 243);
+}
 
-  .personaje {
-    width: 10%;
-    height: 10%;
-    position: absolute;
-    top: 400px;
-    left: 10px;
-  }
-  
-  #game-screen,
-  #gameover-screen {
-    display: none;
-  }
+#start-btn, #restart-btn {
+  background-color: green;
+  color: white;
+  padding: 20px;
+  font-size: 20px;
+  margin-top: 40px;
+  border-radius: 10px; 
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin: 50px;
+}
+
+#game-box {
+  background-color: rgb(102, 147, 231);
+  width:600px;
+  height:400px;
+
+  /* default settings for game box */
+  overflow: hidden; 
+  position: relative; /* this will allow elements to be positioned relative to the game-box */
+  user-select: none; /* this will prevent elements from being highlighted */
+
+  background-image: url("./images/fondo.png");
+  background-position: center;
+  background-size: cover;
+}
+
+#game-screen, #gameover-screen {
+  display: none;
+}
   
