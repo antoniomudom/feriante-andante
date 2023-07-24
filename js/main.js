@@ -1,29 +1,87 @@
 //GLOBAL VARIABLES
 const startButtonNode = document.querySelector("#start-btn");
+
+const playAgainButtonNode = document.querySelector("#restart-btn");
+const winnerButtonNode = document.querySelector("#winner-btn")
 const splashScreenNode=document.querySelector("#splash-screen");
 const gameScreenNode =document.querySelector("#game-screen");
 const gameBoxeNode= document.querySelector("#game-box");
-let gameObj;
+const gameoverScreenNode =document.querySelector("#gameover-screen");
+const winScreenNode =document.querySelector("#win-screen");
+const timerScreenNode =document.querySelector("#timer-screen");
+winScreenNode.style.display= "none";
+timerScreenNode.style.display= "none";
+
+let gameObj = null;
+let timeInSeconds = 5;
+
+function updateTimer() {
+    const timerElement = document.getElementById("timer");
+    const minutes = Math.floor(timeInSeconds / 60);
+    const seconds = timeInSeconds % 60;
+  
+    // Añadimos un cero delante de los números menores a 10 para que se vea 01:05 en lugar de 1:5
+    const formattedTime =
+      (minutes < 10 ? "0" : "") + minutes + ":" + (seconds < 10 ? "0" : "") + seconds;
+  
+    // Actualizamos el contenido del elemento del contador
+    timerElement.textContent = formattedTime;
+  }
+
+  // Función que se ejecutará cada segundo para actualizar el contador
+function countdown() {
+  if (timeInSeconds > 0) {
+    timeInSeconds--;
+    updateTimer();
+  } else {
+    // Aquí puedes añadir código para manejar lo que sucede cuando el tiempo llega a cero
+    // Por ejemplo, mostrar una pantalla de Game Over o reiniciar el juego.
+
+    gameoverScreenNode.style.display = "none";
+    gameScreenNode.style.display = "none";
+    timerScreenNode.style.display = "none";
+    winScreenNode.style.display = "flex";
+  }
+}
 
 //STATE MANAGEMENT FUNCTIONS
 
 function startGame() {
-    splashScreenNode.style.display= "none";
-    gameScreenNode.style.display="flex";
+    // Aquí comienza el contador cuando se presiona el botón de iniciar juego
+    const countdownInterval = setInterval(countdown, 1000);
+    
+  
+    splashScreenNode.style.display = "none";
+    gameScreenNode.style.display = "flex";
+    timerScreenNode.style.display = "flex";
+    winScreenNode.style.display = "none";
 
-     gameObj = new Game();
-    gameObj.gameLoop()
+    gameObj = new Game();
+    gameObj.gameLoop();
+  }
 
-
-}
+  function playAgain() {
+    // Reiniciamos el contador y actualizamos la visualización del tiempo
+    timeInSeconds = 5;
+    updateTimer();
+    gameBoxeNode.innerHTML = "";
+  
+    gameoverScreenNode.style.display = "none";
+    gameScreenNode.style.display = "flex";
+    timerScreenNode.style.display = "flex";
+    winScreenNode.style.display = "none";
+  
+    gameObj = new Game();
+    gameObj.gameLoop();
+  }
 
 
 //ADD EVENT LISTENER
-startButtonNode.addEventListener("click", startGame)
+startButtonNode.addEventListener("click", startGame);
+playAgainButtonNode.addEventListener("click",playAgain);
+winnerButtonNode.addEventListener("click",playAgain);
 
 window.addEventListener("keydown", (event)=>{
-    //todos los eventos nos dan como parametro
-    //informacion del evento que esta ocurriendo
     
 
     if(event.key === "ArrowUp"){

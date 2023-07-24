@@ -1,34 +1,47 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Document</title>
-    <link rel="stylesheet" href="./style.css">
-</head>
-<body>
+    <link rel="stylesheet" href="./style.css" />
+  </head>
+  <body ondragstart="return false;" ondrop="return false;">
     <!-- SPLASH SCREEN -->
     <div id="splash-screen" class="container">
-        <img src="./images/portada.png" width="500" alt="logo">
-        <button id="start-btn">Start!</button>
-      </div>
+      <img src="./images/portada.png" width="500" alt="logo" />
+      <button id="start-btn">Start!</button>
+      <h1>Llega hasta la portada</h1>
+      <h2>Has quedado allí con tus amigos</h2>
+    </div>
+
+    <div id="timer-screen">
+      <h1 id="timer">01:00</h1>
+    </div>
 
     <!-- GAME SCREEN -->
     <div id="game-screen" class="container">
-        <div id="game-box">
-          <!-- <img src="./images/personaje.png" width="50px" alt="pollito"> -->
-        </div>
+      <div id="game-box">
+        <!-- <img src="./images/personaje.png" width="50px" alt="pollito"> -->
       </div>
+    </div>
 
     <!-- GAME OVER SCREEN -->
     <div id="gameover-screen" class="container">
-        <img src="./images/gameover.png" width="500" alt="logo">
-        <button id="restart-btn">Play Again!</button>
-      </div>
-  
-      
+      <img src="./images/gameover.png" width="500" alt="logo" />
+      <button id="restart-btn">Play Again!</button>
+    </div>
+    <!-- WIN SCREEN -->
+    <div id="win-screen" class="container">
+      <h1>¡Has encontado a tus amigos!</h1>
+      <img src="./images/amigos.png" width="400" height="450" alt="logo" />
+      <button id="winner-btn">Play Again!</button>
+    </div>
+
     <script src="./js/main.js"></script>
     <script src="./js/game.js"></script>
     <script src="./js/personaje.js"></script>
-</body>
+    <script src="./js/carruaje.js"></script>
+    <script src="./js/croqueta.js"></script>
+  </body>
 </html>

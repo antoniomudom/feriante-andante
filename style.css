@@ -1,10 +1,9 @@
-
 body {
   margin: 0;
   background-color: rgb(80, 183, 243);
 }
 
-#start-btn, #restart-btn {
+#start-btn, #restart-btn, #winner-btn {
   background-color: green;
   color: white;
   padding: 20px;
@@ -23,8 +22,8 @@ body {
 
 #game-box {
   background-color: rgb(102, 147, 231);
-  width:600px;
-  height:400px;
+  width:1000px;
+  height:550px;
 
   /* default settings for game box */
   overflow: hidden; 
@@ -38,5 +37,22 @@ body {
 
 #game-screen, #gameover-screen {
   display: none;
+}
+
+#timer-screen {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+#timer {
+  font-size: 2rem;
+  font-weight: bold;
+  color: #ffffff;
+  background-color: #333333;
+  padding: 10px 20px;
+  border-radius: 5px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
   
