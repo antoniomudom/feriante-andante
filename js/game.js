@@ -7,6 +7,7 @@ class Game{
         // this.unCarruaje = new Carruaje()
         this.carruajeArr = [];
         this.croquetaArr = [];
+        this.gotCroqueta= false;
 
         this.frames = 0;
         this.isGameOn = true;
@@ -15,15 +16,42 @@ class Game{
 
     gameOver = ()=>{
         this.isGameOn = false;
+        gameBoxeNode.innerHTML = "";
         gameScreenNode.style.display ="none";
         gameoverScreenNode.style.display ="flex";
         timerScreenNode.style.display = "none";
 
     }
+    gameWin =()=>{
+        this.isGameOn = false;
+        gameBoxeNode.innerHTML = "";
+        gameScreenNode.style.display ="none";
+        gameoverScreenNode.style.display ="none";
+        timerScreenNode.style.display = "none";
+        winScreenNode.style.display = "flex";
+
+
+    }
+
+    collisionCroquetaPersonaje = () => {
+        this.croquetaArr.forEach((eachCroqueta, croquetaIndex) => {
+          if (
+            this.personaje.x < eachCroqueta.x + eachCroqueta.w &&
+            this.personaje.x + this.personaje.w > eachCroqueta.x &&
+            this.personaje.y < eachCroqueta.y + eachCroqueta.h &&
+            this.personaje.y + this.personaje.h > eachCroqueta.y
+          ) {
+            eachCroqueta.isCaught = true;
+             // ESTABLECE isCaught EN true SI HAY COLISIÓN
+             this.gotCroqueta = true;
+          }
+        });
+      };
     
 
 
     collisionPersonajeCarruaje = ()=>{
+
 
         this.carruajeArr.forEach((eachCarruaje)=>{
 
@@ -33,10 +61,13 @@ class Game{
                 this.personaje.y < eachCarruaje.y + eachCarruaje.h &&
                 this.personaje.y + this.personaje.h > eachCarruaje.y
               ) {
-                  if(winScreenNode.style.display === "none"){
+                if(this.gotCroqueta=== true){
+                    this.gotCroqueta= false;
+                }else{
                 this.gameOver();
+                }
                   } 
-              }
+              
         })
     }
 
@@ -124,6 +155,13 @@ class Game{
         this.carruajeDisappear();
         this.collisionPersonajeCarruaje();
         this.collisionCroquetaCarruaje();
+        
+
+        this.croquetaArr.forEach((eachCroqueta) => {
+         eachCroqueta.follow(this.personaje.x, this.personaje.y);
+         // LLAMA AL MÉTODO follow SI LA CROQUETA ESTÁ ATRAPADA
+        });
+        this.collisionCroquetaPersonaje();
         if(this.isGameOn === true){
         requestAnimationFrame(this.gameLoop)
     }

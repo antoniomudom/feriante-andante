@@ -13,7 +13,7 @@ winScreenNode.style.display= "none";
 timerScreenNode.style.display= "none";
 
 let gameObj = null;
-let timeInSeconds = 5;
+let timeInSeconds = 20;
 
 function updateTimer() {
     const timerElement = document.getElementById("timer");
@@ -37,10 +37,7 @@ function countdown() {
     // Aquí puedes añadir código para manejar lo que sucede cuando el tiempo llega a cero
     // Por ejemplo, mostrar una pantalla de Game Over o reiniciar el juego.
 
-    gameoverScreenNode.style.display = "none";
-    gameScreenNode.style.display = "none";
-    timerScreenNode.style.display = "none";
-    winScreenNode.style.display = "flex";
+   gameObj.gameWin();
   }
 }
 
@@ -62,9 +59,9 @@ function startGame() {
 
   function playAgain() {
     // Reiniciamos el contador y actualizamos la visualización del tiempo
-    timeInSeconds = 5;
+    timeInSeconds = 20;
     updateTimer();
-    gameBoxeNode.innerHTML = "";
+    
   
     gameoverScreenNode.style.display = "none";
     gameScreenNode.style.display = "flex";

@@ -35,16 +35,18 @@ class Personaje{
 
     updatePosition() {
         // Evitar que el personaje se salga por arriba
-    // if (this.y < this.gameBoxTop) {
-    //     this.y = this.gameBoxTop;
-    //   }
-  
-    //   // Evitar que el personaje se salga por abajo
-    //   if (this.y > this.gameBoxBottom) {
-    //     this.y = this.gameBoxBottom;
-    //   }
+        if (this.y < 0) {
+          this.y = 0;
+        }
+    
+        // Evitar que el personaje se salga por abajo (ajusta el valor máximo según el tamaño del juego)
+        const maxGameBoxHeight = 550;
+        if (this.y > maxGameBoxHeight - this.h) {
+          this.y = maxGameBoxHeight - this.h;
+        }
+    
         this.node.style.top = `${this.y}px`;
         this.node.style.left = `${this.x}px`;
-    }
+      }
 
 }

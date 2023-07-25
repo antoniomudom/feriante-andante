@@ -19,7 +19,6 @@ class Carruaje{
         this.node.style.left = `${this.x}px`;
 
 
-
     }
 
     automaticMovement =() => {
