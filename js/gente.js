@@ -1,16 +1,16 @@
-class Carruaje{
+class Gente{
      
     constructor(){
 
         this.node= document.createElement("img");
-        this.node.src = "./images/cochecaballos.png";
+        this.node.src = "./images/gente.png";
         gameBoxeNode.append(this.node)
 
         //propiedades de posicion y dimensiones del carruaje
         this.x = gameBoxeNode.offsetWidth + 150;
         this.y = Math.floor(Math. random()* 450);
         this.w = 100;
-        this.h = 80;
+        this.h = 90;
 
         this.node.style.width = `${this.w}px`;
         this.node.style.height = `${this.h}px`;

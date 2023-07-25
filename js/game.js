@@ -5,8 +5,9 @@ class Game{
     constructor(){
         this.personaje = new Personaje()
         // this.unCarruaje = new Carruaje()
-        this.carruajeArr = [];
+        this.enemigoArr = [];
         this.croquetaArr = [];
+
         this.gotCroqueta= false;
 
         this.frames = 0;
@@ -50,16 +51,16 @@ class Game{
     
 
 
-    collisionPersonajeCarruaje = ()=>{
+    collisionPersonajeEnemigo = ()=>{
 
 
-        this.carruajeArr.forEach((eachCarruaje)=>{
+        this.enemigoArr.forEach((eachEnemigo)=>{
 
             if (
-                this.personaje.x < eachCarruaje.x + eachCarruaje.w &&
-                this.personaje.x + this.personaje.w > eachCarruaje.x &&
-                this.personaje.y < eachCarruaje.y + eachCarruaje.h &&
-                this.personaje.y + this.personaje.h > eachCarruaje.y
+                this.personaje.x < eachEnemigo.x + eachEnemigo.w &&
+                this.personaje.x + this.personaje.w > eachEnemigo.x &&
+                this.personaje.y < eachEnemigo.y + eachEnemigo.h &&
+                this.personaje.y + this.personaje.h > eachEnemigo.y
               ) {
                 if(this.gotCroqueta=== true){
                     this.gotCroqueta= false;
@@ -71,18 +72,18 @@ class Game{
         })
     }
 
-    collisionCroquetaCarruaje = () => {
+    collisionCroquetaEnemigo = () => {
         this.croquetaArr.forEach((eachCroqueta, croquetaIndex) => {
-          this.carruajeArr.forEach((eachCarruaje, carruajeIndex) => {
+          this.enemigoArr.forEach((eachEnemigo, enemigoIndex) => {
             if (
-              eachCroqueta.x < eachCarruaje.x + eachCarruaje.w &&
-              eachCroqueta.x + eachCroqueta.w > eachCarruaje.x &&
-              eachCroqueta.y < eachCarruaje.y + eachCarruaje.h &&
-              eachCroqueta.y + eachCroqueta.h > eachCarruaje.y
+              eachCroqueta.x < eachEnemigo.x + eachEnemigo.w &&
+              eachCroqueta.x + eachCroqueta.w > eachEnemigo.x &&
+              eachCroqueta.y < eachEnemigo.y + eachEnemigo.h &&
+              eachCroqueta.y + eachCroqueta.h > eachEnemigo.y
             ) {
               // Si hay colisión entre croqueta y carruaje, elimina el carruaje
-              eachCarruaje.node.remove(); // Elimina el nodo del DOM
-              this.carruajeArr.splice(carruajeIndex, 1); // Elimina el carruaje del array
+              eachEnemigo.node.remove(); // Elimina el nodo del DOM
+              this.enemigoArr.splice(enemigoIndex, 1); // Elimina el carruaje del array
 
               eachCroqueta.node.remove();
               this.croquetaArr.splice(croquetaIndex, 1); 
@@ -90,26 +91,25 @@ class Game{
           });
         });
       };
+      
 
-    carruajeDisappear = ()=>{
-        if(this.carruajeArr[0].x < -100){
-            this.carruajeArr[0].node.remove();
-            this.carruajeArr.shift();  
+    enemigoDisappear = ()=>{
+        if(this.enemigoArr[0].x < -100){
+            this.enemigoArr[0].node.remove();
+            this.enemigoArr.shift();  
         }
     }
 
-    carruajeSpawning = ()=> {
-
-        if(this.carruajeArr.length === 0 || this.frames % 120 ===0){
-
-            // let randomNumber = Math.floor(Math. random()* 550)
-
-
-            let nuevoCarruaje= new Carruaje()
-            this.carruajeArr.push(nuevoCarruaje)
+    enemigoSpawning = () => {
+        if (this.enemigoArr.length === 0 || this.frames % 120 === 0) {
+          // Crear un enemigo tipo carruaje y añadirlo al array
+          this.enemigoArr.push(new Enemigo(true));
+    
+          // Crear un enemigo tipo persona y añadirlo al array
+          this.enemigoArr.push(new Enemigo(false));
         }
-
-    }
+      };
+    
 
     croquetaDisappear = ()=>{
         if(this.croquetaArr[0].x < -60){
@@ -122,7 +122,7 @@ class Game{
 
     croquetaSpawning = ()=> {
 
-        if(this.croquetaArr.length === 0 || this.frames % 50 ===0){
+        if(this.croquetaArr.length === 0 || this.frames % 600 ===0){
 
             // let randomNumber = Math.floor(Math. random()* 550)
 
@@ -131,6 +131,7 @@ class Game{
             this.croquetaArr.push(nuevaCroqueta)
         }
     }
+    
 
     //métodos de mi juego
 
@@ -143,18 +144,21 @@ class Game{
 
         // this.unCarruaje.automaticMovement();
 
-        this.carruajeSpawning();
-        this.carruajeArr.forEach((eachCarruaje)=> {
-            eachCarruaje.automaticMovement();
+        this.enemigoSpawning();
+        this.enemigoArr.forEach((eachEnemigo)=> {
+            eachEnemigo.automaticMovement();
         })
         this.croquetaSpawning();
         this.croquetaArr.forEach((eachCroqueta)=> {
             eachCroqueta.automaticMovement();
         })
+       
 
-        this.carruajeDisappear();
-        this.collisionPersonajeCarruaje();
-        this.collisionCroquetaCarruaje();
+
+        this.enemigoDisappear();
+        this.collisionPersonajeEnemigo();
+        
+        this.collisionCroquetaEnemigo();
         
 
         this.croquetaArr.forEach((eachCroqueta) => {
