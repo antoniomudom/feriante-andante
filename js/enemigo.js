@@ -1,6 +1,6 @@
 class Enemigo {
     // Variables estáticas para almacenar la posición (X, Y) del último enemigo creado
-    static lastEnemyX = 0;
+    static lastEnemyX = 0;//la palabra static me permite compartir la variable con toda la class
     static lastEnemyY = 0;
   
     constructor(isCarruaje) {
@@ -23,11 +23,11 @@ class Enemigo {
       this.node.style.position = "absolute";
       this.node.style.top = `${this.y}px`;
   
-      // Verificar y ajustar la posición si está demasiado cerca del último enemigo creado
-      if (Math.abs(this.x - Enemigo.lastEnemyX) < 150 && Math.abs(this.y - Enemigo.lastEnemyY) < 150) {
-        this.x += 150; // Ajustar la posición X con un valor arbitrario (puedes cambiarlo según tus necesidades)
+      // Verificar y ajustar la posición si está demasiado cerca del último enemigo creado. 150 está perfe, lo he comprobado
+      if (this.x - Enemigo.lastEnemyX < 150 && this.y - Enemigo.lastEnemyY < 150) {
+        this.x += 150; // Ajustar la posición X con un valor arbitrario (se puede modificar tb)
         this.y = Math.random() * (gameBoxeNode.offsetHeight - 100); // Reasignar una nueva posición Y
-      }
+      }//me he dado cuenta que solo con x se pegaban por arriba y abajo y he metido el eje y
   
       Enemigo.lastEnemyX = this.x;
       Enemigo.lastEnemyY = this.y;
