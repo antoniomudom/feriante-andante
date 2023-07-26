@@ -1,7 +1,13 @@
-class Croqueta {
-  constructor() {
+class Escudo {
+
+  // static lastEscudoX = 0;//la palabra static me permite compartir la variable con toda la class
+    // static lastEscudoY = 0;
+
+  constructor(isCroqueta) {
     this.node = document.createElement("img");
+    if(isCroqueta=== true){
     this.node.src = "./images/croqueta.png";
+  }else{this.node.src = "./images/rebujito.png"}
     gameBoxeNode.append(this.node);
 
     //propiedades de posicion y dimensiones del carruaje
@@ -16,11 +22,19 @@ class Croqueta {
     this.node.style.top = `${this.y}px`;
     this.node.style.left = `${this.x}px`;
 
+    // if (this.x - Escudo.lastEscudoX < 150 && this.y - Escudo.lastEscudoY < 60) {
+      // this.x += 60; // Ajustar la posición X con un valor arbitrario (se puede modificar tb)
+      // this.y = Math.random() * (gameBoxeNode.offsetHeight - 100); // Reasignar una nueva posición Y
+    // }//me he dado cuenta que solo con x se pegaban por arriba y abajo y he metido el eje y
+
+    // Escudo.lastEnemyX = this.x;
+    // Escudo.lastEnemyY = this.y;
+
     this.isCaught = false;
   }
 
   automaticMovement = () => {
-    this.x -= 2;
+    this.x -= 6;
     this.updatePosition();
   };
 

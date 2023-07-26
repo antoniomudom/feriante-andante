@@ -6,9 +6,9 @@ class Game{
         this.personaje = new Personaje()
         // this.unCarruaje = new Carruaje()
         this.enemigoArr = [];
-        this.croquetaArr = [];
+        this.escudoArr = [];
 
-        this.gotCroqueta= false;
+        this.gotEscudo= false;
 
         this.frames = 0;
         this.isGameOn = true;
@@ -34,17 +34,17 @@ class Game{
 
     }
 
-    collisionCroquetaPersonaje = () => {
-        this.croquetaArr.forEach((eachCroqueta, croquetaIndex) => {
+    collisionEscudoPersonaje = () => {
+        this.escudoArr.forEach((eachEscudo, escudoIndex) => {
           if (
-            this.personaje.x < eachCroqueta.x + eachCroqueta.w &&
-            this.personaje.x + this.personaje.w > eachCroqueta.x &&
-            this.personaje.y < eachCroqueta.y + eachCroqueta.h &&
-            this.personaje.y + this.personaje.h > eachCroqueta.y
+            this.personaje.x < eachEscudo.x + eachEscudo.w &&
+            this.personaje.x + this.personaje.w > eachEscudo.x &&
+            this.personaje.y < eachEscudo.y + eachEscudo.h &&
+            this.personaje.y + this.personaje.h > eachEscudo.y
           ) {
-            eachCroqueta.isCaught = true;
+            eachEscudo.isCaught = true;
              // ESTABLECE isCaught EN true SI HAY COLISIÓN
-             this.gotCroqueta = true;
+             this.gotEscudo = true;
           }
         });
       };
@@ -52,18 +52,19 @@ class Game{
 
 
     collisionPersonajeEnemigo = ()=>{
+      let overlap =20;
 
 
         this.enemigoArr.forEach((eachEnemigo)=>{
 
             if (
-                this.personaje.x < eachEnemigo.x + eachEnemigo.w &&
-                this.personaje.x + this.personaje.w > eachEnemigo.x &&
-                this.personaje.y < eachEnemigo.y + eachEnemigo.h &&
-                this.personaje.y + this.personaje.h > eachEnemigo.y
+                this.personaje.x - overlap < eachEnemigo.x + eachEnemigo.w &&
+                this.personaje.x- overlap + this.personaje.w- overlap > eachEnemigo.x &&
+                this.personaje.y- overlap < eachEnemigo.y + eachEnemigo.h &&
+                this.personaje.y- overlap + this.personaje.h- overlap > eachEnemigo.y
               ) {
-                if(this.gotCroqueta=== true){
-                    this.gotCroqueta= false;
+                if(this.gotEscudo=== true){
+                    this.gotEscudo= false;
                 }else{
                 this.gameOver();
                 }
@@ -72,21 +73,22 @@ class Game{
         })
     }
 
-    collisionCroquetaEnemigo = () => {
-        this.croquetaArr.forEach((eachCroqueta, croquetaIndex) => {
+    // Funcion para que no salgan sobrepuestos en pantalla:
+    collisionEscudoEnemigo = () => {
+        this.escudoArr.forEach((eachEscudo, escudoIndex) => {
           this.enemigoArr.forEach((eachEnemigo, enemigoIndex) => {
             if (
-              eachCroqueta.x < eachEnemigo.x + eachEnemigo.w &&
-              eachCroqueta.x + eachCroqueta.w > eachEnemigo.x &&
-              eachCroqueta.y < eachEnemigo.y + eachEnemigo.h &&
-              eachCroqueta.y + eachCroqueta.h > eachEnemigo.y
+              eachEscudo.x < eachEnemigo.x + eachEnemigo.w &&
+              eachEscudo.x + eachEscudo.w > eachEnemigo.x &&
+              eachEscudo.y < eachEnemigo.y + eachEnemigo.h &&
+              eachEscudo.y + eachEscudo.h > eachEnemigo.y
             ) {
               // Si hay colisión entre croqueta y carruaje, elimina el carruaje
               eachEnemigo.node.remove(); // Elimina el nodo del DOM
               this.enemigoArr.splice(enemigoIndex, 1); // Elimina el carruaje del array
 
-              eachCroqueta.node.remove();
-              this.croquetaArr.splice(croquetaIndex, 1); 
+              eachEscudo.node.remove();
+              this.escudoArr.splice(escudoIndex, 1); 
             }
           });
         });
@@ -101,34 +103,39 @@ class Game{
     }
 
     enemigoSpawning = () => {
-        if (this.enemigoArr.length === 0 || this.frames % 120 === 0) {
-          // Crear un enemigo tipo carruaje y añadirlo al array
-          this.enemigoArr.push(new Enemigo(true));
+        if (this.enemigoArr.length === 0 || this.frames % 30 === 0) {
+          
+          // Crear un randomNum entre 1 y 2:^
+          // Si 1 ----> Enemigo(true)
+          // Si 2 ----> Enemigo(false)
+          const randomNum= Math.floor(Math.random()*2)+1
+          this.enemigoArr.push(new Enemigo(randomNum===1));
     
           // Crear un enemigo tipo persona y añadirlo al array
-          this.enemigoArr.push(new Enemigo(false));
+          // this.enemigoArr.push(new Enemigo(false));
         }
       };
     
 
-    croquetaDisappear = ()=>{
-        if(this.croquetaArr[0].x < -60){
-            this.croquetaArr[0].node.remove()
-            this.croquetaArr.shift()
+    escudoDisappear = ()=>{
+        if(this.escudoArr[0].x < -60){
+            this.escudoArr[0].node.remove()
+            this.escudoArr.shift()
             
         }
 
     }
 
-    croquetaSpawning = ()=> {
+    escudoSpawning = ()=> {
 
-        if(this.croquetaArr.length === 0 || this.frames % 600 ===0){
+        if(this.escudoArr.length === 0 || this.frames % 600 ===0){
 
-            // let randomNumber = Math.floor(Math. random()* 550)
+            this.escudoArr.push(new Escudo(true));
+            this.escudoArr.push(new Escudo(false));
 
 
-            let nuevaCroqueta= new Croqueta()
-            this.croquetaArr.push(nuevaCroqueta)
+            // let nuevoEscudo= new Escudo()
+            // this.escudoArr.push(nuevoEscudo)
         }
     }
     
@@ -148,24 +155,24 @@ class Game{
         this.enemigoArr.forEach((eachEnemigo)=> {
             eachEnemigo.automaticMovement();
         })
-        this.croquetaSpawning();
-        this.croquetaArr.forEach((eachCroqueta)=> {
-            eachCroqueta.automaticMovement();
+        this.escudoSpawning();
+        this.escudoArr.forEach((eachEscudo)=> {
+            eachEscudo.automaticMovement();
         })
        
 
 
         this.enemigoDisappear();
         this.collisionPersonajeEnemigo();
-        
-        this.collisionCroquetaEnemigo();
+        this.collisionEscudoPersonaje();
+        this.collisionEscudoEnemigo();
         
 
-        this.croquetaArr.forEach((eachCroqueta) => {
-         eachCroqueta.follow(this.personaje.x, this.personaje.y);
-         // LLAMA AL MÉTODO follow SI LA CROQUETA ESTÁ ATRAPADA
+        this.escudoArr.forEach((eachEscudo) => {
+         eachEscudo.follow(this.personaje.x, this.personaje.y);
+         // LLAMA AL MÉTODO follow SI el ESCUDO ESTÁ ATRAPADO
         });
-        this.collisionCroquetaPersonaje();
+        
         if(this.isGameOn === true){
         requestAnimationFrame(this.gameLoop)
     }

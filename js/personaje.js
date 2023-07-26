@@ -15,8 +15,7 @@ class Personaje{
         this.w = 45;
         this.h = 50;
     
-        // this.gravitySpeed = 2;
-        // this.jumpSpeed= 40;
+        
     
         //ajustar tamaño y posicion inicial del perspnaje
         this.node.style.width = `${this.w}px`;
