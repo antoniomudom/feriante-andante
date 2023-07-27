@@ -52,16 +52,16 @@ class Game{
 
 
     collisionPersonajeEnemigo = ()=>{
-      let overlap =20;
+      // let overlap =20;
 
 
         this.enemigoArr.forEach((eachEnemigo)=>{
 
             if (
-                this.personaje.x - overlap < eachEnemigo.x + eachEnemigo.w &&
-                this.personaje.x- overlap + this.personaje.w- overlap > eachEnemigo.x &&
-                this.personaje.y- overlap < eachEnemigo.y + eachEnemigo.h &&
-                this.personaje.y- overlap + this.personaje.h- overlap > eachEnemigo.y
+                this.personaje.x  < eachEnemigo.x + eachEnemigo.w &&
+                this.personaje.x + this.personaje.w > eachEnemigo.x &&
+                this.personaje.y < eachEnemigo.y + eachEnemigo.h &&
+                this.personaje.y + this.personaje.h > eachEnemigo.y
               ) {
                 if(this.gotEscudo=== true){
                     this.gotEscudo= false;
@@ -77,6 +77,7 @@ class Game{
     collisionEscudoEnemigo = () => {
         this.escudoArr.forEach((eachEscudo, escudoIndex) => {
           this.enemigoArr.forEach((eachEnemigo, enemigoIndex) => {
+            console.log(eachEnemigo.node.currentSrc)
             if (
               eachEscudo.x < eachEnemigo.x + eachEnemigo.w &&
               eachEscudo.x + eachEscudo.w > eachEnemigo.x &&
@@ -95,12 +96,7 @@ class Game{
       };
       
 
-    enemigoDisappear = ()=>{
-        if(this.enemigoArr[0].x < -100){
-            this.enemigoArr[0].node.remove();
-            this.enemigoArr.shift();  
-        }
-    }
+    
 
     enemigoSpawning = () => {
         if (this.enemigoArr.length === 0 || this.frames % 30 === 0) {
@@ -109,12 +105,20 @@ class Game{
           // Si 1 ----> Enemigo(true)
           // Si 2 ----> Enemigo(false)
           const randomNum= Math.floor(Math.random()*2)+1
-          this.enemigoArr.push(new Enemigo(randomNum===1));
+          console.log(randomNum)
+          this.enemigoArr.push(new Enemigo(randomNum));
+          
     
           // Crear un enemigo tipo persona y añadirlo al array
           // this.enemigoArr.push(new Enemigo(false));
         }
       };
+      enemigoDisappear = ()=>{
+        if(this.enemigoArr[0].x < -100){
+            this.enemigoArr[0].node.remove();
+            this.enemigoArr.shift();  
+        }
+    }
     
 
     escudoDisappear = ()=>{

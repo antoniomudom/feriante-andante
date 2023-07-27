@@ -5,9 +5,11 @@ class Enemigo {
   
     constructor(isCarruaje) {
       this.node = document.createElement("img");
-      if (isCarruaje === true) {
+      if (isCarruaje === 1) {
+        this.h = 90;
         this.node.src = "./images/cochecaballos.png";
       } else {
+        this.h= 70;
         this.node.src = "./images/gente.png";
       }
       gameBoxeNode.append(this.node);
@@ -16,7 +18,7 @@ class Enemigo {
       this.x = gameBoxeNode.offsetWidth + 150;
       this.y = Math.random() * (gameBoxeNode.offsetHeight - 100);
       this.w = 100;
-      this.h = 90;
+      
   
       this.node.style.width = `${this.w}px`;
       this.node.style.height = `${this.h}px`;

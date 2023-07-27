@@ -12,6 +12,7 @@ const timerScreenNode = document.querySelector("#timer-screen");
 winScreenNode.style.display = "none";
 timerScreenNode.style.display = "none";
 
+
 let gameObj = null;
 let timeInSeconds = 60;
 
