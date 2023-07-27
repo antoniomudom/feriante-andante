@@ -12,6 +12,8 @@ class Game{
 
         this.frames = 0;
         this.isGameOn = true;
+        this.musicGame= new Audio("audio/sevillana.mp3");
+        this.musicGame.volume=0.05
 
     }
 
@@ -21,6 +23,7 @@ class Game{
         gameScreenNode.style.display ="none";
         gameoverScreenNode.style.display ="flex";
         timerScreenNode.style.display = "none";
+        this.musicGame.pause();
 
     }
     gameWin =()=>{
@@ -30,6 +33,9 @@ class Game{
         gameoverScreenNode.style.display ="none";
         timerScreenNode.style.display = "none";
         winScreenNode.style.display = "flex";
+        this.musicGame.pause();
+
+
 
 
     }

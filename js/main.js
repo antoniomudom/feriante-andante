@@ -9,15 +9,19 @@ const gameBoxeNode = document.querySelector("#game-box");
 const gameoverScreenNode = document.querySelector("#gameover-screen");
 const winScreenNode = document.querySelector("#win-screen");
 const timerScreenNode = document.querySelector("#timer-screen");
+const miMusica = document.querySelector("#miMusica");
 winScreenNode.style.display = "none";
 timerScreenNode.style.display = "none";
+
 
 
 let gameObj = null;
 let timeInSeconds = 60;
 
+
 function reproducirMusica() {
-  const miMusica = document.getElementById("miMusica");
+  console.log(miMusica)
+  
   miMusica.volume = 0.05; // Ajustar el volumen como ha dicho Jorge (0.05)
   miMusica.play();
 
@@ -58,6 +62,8 @@ function countdown() {
 //STATE MANAGEMENT FUNCTIONS
 
 function startGame() {
+  
+
   // Aquí comienza el contador cuando se presiona el botón de iniciar juego
   const countdownInterval = setInterval(countdown, 1000);
 
@@ -65,12 +71,19 @@ function startGame() {
   gameScreenNode.style.display = "flex";
   timerScreenNode.style.display = "flex";
   winScreenNode.style.display = "none";
-
+  
   gameObj = new Game();
   gameObj.gameLoop();
+  // reproducirMusica();
+  gameObj.musicGame.play();
+
+
+  
 }
 
 function playAgain() {
+ 
+
   // Reiniciamos el contador y actualizamos la visualización del tiempo
   timeInSeconds = 60;
   updateTimer();
@@ -79,16 +92,21 @@ function playAgain() {
   gameScreenNode.style.display = "flex";
   timerScreenNode.style.display = "flex";
   winScreenNode.style.display = "none";
+  
 
   gameObj = new Game();
   gameObj.gameLoop();
+  // reproducirMusica();
+  gameObj.musicGame.play();
+
+
 }
 
 //ADD EVENT LISTENER
 startButtonNode.addEventListener("click", startGame);
 playAgainButtonNode.addEventListener("click", playAgain);
 winnerButtonNode.addEventListener("click", playAgain);
-window.onload = reproducirMusica;
+// window.onload = reproducirMusica;
 
 window.addEventListener("keydown", (event) => {
   if (event.key === "ArrowUp") {
