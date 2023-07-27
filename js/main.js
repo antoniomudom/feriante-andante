@@ -15,6 +15,13 @@ timerScreenNode.style.display = "none";
 let gameObj = null;
 let timeInSeconds = 60;
 
+function reproducirMusica() {
+  const miMusica = document.getElementById("miMusica");
+  miMusica.volume = 0.05; // Ajustar el volumen como ha dicho Jorge (0.05)
+  miMusica.play();
+
+ }
+
 function updateTimer() {
   const timerElement = document.getElementById("timer");
   const minutes = Math.floor(timeInSeconds / 60);
@@ -34,7 +41,7 @@ function updateTimer() {
 
 // Función que se ejecutará cada segundo para actualizar el contador
 function countdown() {
-  if (gameObj.isGameOn=== true) {
+  if (gameObj.isGameOn === true) {
     if (timeInSeconds > 0) {
       timeInSeconds--;
       updateTimer();
@@ -80,6 +87,7 @@ function playAgain() {
 startButtonNode.addEventListener("click", startGame);
 playAgainButtonNode.addEventListener("click", playAgain);
 winnerButtonNode.addEventListener("click", playAgain);
+window.onload = reproducirMusica;
 
 window.addEventListener("keydown", (event) => {
   if (event.key === "ArrowUp") {
