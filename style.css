@@ -1,7 +1,7 @@
 body {
   margin: 0;
   background-color: rgb(243, 41, 26);
-  background-image: linear-gradient(to right, red 50%, white 0);
+  background-image: linear-gradient(to right, red 50%, white 0);/*con esto hago el fondo de rayas que parece una caseta*/
   background-size: 75px 100%;
 }
 
